@@ -106,4 +106,3 @@ venv.bak/
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/tasks.xml
-*.iml
