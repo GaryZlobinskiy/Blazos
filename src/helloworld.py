@@ -5,7 +5,7 @@ from pprint import pprint
 ts = TimeSeries(key='PQ5WZMLZQN3MBGHC', output_format='pandas')
 data, metadata = ts.get_intraday(symbol=stock, interval='60min', outputsize='full')
 pprint(data.head(90000))
-data.to_csv('StockInfo.csv', sep='\t')
+data.to_csv('StockInfoFinal.csv', sep=',')
 
 import numpy as np
 import matplotlib.pyplot as plt
