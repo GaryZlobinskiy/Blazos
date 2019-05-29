@@ -1,3 +1,6 @@
+#https://www.marketwatch.com/game/stockpredictionrnn
+
+
 import tensorflow as tf
 import numpy as np
 import pandas as pd

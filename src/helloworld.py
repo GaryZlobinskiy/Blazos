@@ -1,4 +1,4 @@
-stock = 'AAPL' #input("What Stock Would you like to invest in? (Write the stock marker; Ex; MSFT = microsoft\n")
+stock = 'MSFT' #input("What Stock Would you like to invest in? (Write the stock marker; Ex; MSFT = microsoft\n")
 
 from alpha_vantage.timeseries import TimeSeries
 from pprint import pprint
@@ -18,8 +18,8 @@ y = dataset.iloc[:, 1].values
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
+from sklearn.preprocessing import MinMaxScaler
+sc = MinMaxScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
@@ -28,10 +28,10 @@ from keras.layers import Dense
 
 classifier = Sequential()
 
-classifier.add(Dense(units = 8, kernel_initializer = 'uniform', activation = 'relu', input_dim = 5))
-classifier.add(Dense(units = 4, kernel_initializer = 'uniform', activation = 'relu'))
+classifier.add(Dense(units = 45, kernel_initializer = 'uniform', activation = 'relu', input_dim = 5))
+classifier.add(Dense(units = 15, kernel_initializer = 'uniform', activation = 'sigmoid'))
 classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
-classifier.compile(optimizer = 'adam', loss = 'mse')#, metrics = ['accuracy'])
+classifier.compile(optimizer = 'adam', loss = 'mae', metrics = ['accuracy'])
 
 classifier.fit(X_train, y_train, batch_size = 10, epochs = 10, validation_data=(X_test, y_test))
 
@@ -41,4 +41,4 @@ y_pred = (y_pred == y)
 new_prediction = classifier.predict(sc.transform(np.array([169.75,165.49,198.94,194.92,7652178.0]).reshape(1, -1)))
 
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
+#cm = confusion_matrix(y_test, y_pred)
