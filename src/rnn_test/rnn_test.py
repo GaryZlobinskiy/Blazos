@@ -34,8 +34,8 @@ y_test = np.reshape(y_test, (y_test.shape[0], 5))
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(50, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
-model.add(tf.keras.layers.LSTM(20))
+model.add(tf.keras.layers.LSTM(60, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
+model.add(tf.keras.layers.LSTM(25))
 model.add(tf.keras.layers.Dense(5))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
