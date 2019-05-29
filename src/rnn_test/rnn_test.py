@@ -35,12 +35,15 @@ y_test = np.reshape(y_test, (y_test.shape[0], 1))
 print("Creating model...")
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.LSTM(50, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
-model.add(tf.keras.layers.LSTM(50))
+model.add(tf.keras.layers.LSTM(20))
 model.add(tf.keras.layers.Dense(1))
 model.compile(loss="mean_squared_error", optimizer="adam")
 
 print("Training...")
 history = model.fit(X_train, y_train, epochs=2, batch_size=1, verbose=1, validation_data=(X_test, y_test))
+
+print("Saving...")
+model.save_weights("rnn_model.h5")
 
 print("Plotting...")
 plt.figure(figsize=(16, 10))
