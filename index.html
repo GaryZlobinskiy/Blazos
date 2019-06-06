@@ -21,18 +21,22 @@
   <table cellspacing=20>
       <tr>
       <td>
-        <h3>
+        <h2>
           Predictor Software
-        </h3>
+        </h2>
         <form>
-          Choose your Ticker Symbol:<br>
           <p>
-             <label>Select Ticker</label>
-             <select id = "myList">
-               <option value = "WMT">WMT</option>
-               <option value = "RDS-A">RDS-A</option>
-               <option value = "TM">TM</option>
-               <option value = "BP">BP</option>
+              <label>Write the Ticker (from the NYSE only) Symbol in All Caps</label><br>
+             <input type="text">
+          </p>
+            <p>
+             <label>Select Time for Prediction</label><br>
+             <select id = "timeList">
+               <option value = "1">1 Day</option>
+               <option value = "7">1 Week</option>
+               <option value = "31">1 Month</option>
+               <option value = "365">1 Year</option>
+                 <option value = "3652">10 Years</option>
              </select>
           </p>
           <!--<input type = "text" name = "ticker"><br>-->
@@ -42,6 +46,13 @@
       </tr>
   </table>
   <hr>
+  <table cellspacing="20">
+      <tr>
+          <td>
+            <h2>Graph Will Show Below Once Above Form is Submitted:</h2><br>
+          </td>
+      </tr>
+  </table>
 </body>
 
 </html>
