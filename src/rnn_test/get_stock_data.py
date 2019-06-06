@@ -71,7 +71,7 @@ stockList = ["WMT",
   "UBER",
   "NYSE"]
 
-stock = input("Choose the stock you want by writing its ticker symbol:\n")
+stock = input("MSFT")
 key = "PQ5WZMLZQN3MBGHC"
 
 ts = TimeSeries(key, output_format="pandas")

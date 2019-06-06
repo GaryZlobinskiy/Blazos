@@ -1,4 +1,6 @@
 #https://www.marketwatch.com/game/stockpredictionrnn
+#UNUSED RNN
+
 
 from alpha_vantage.timeseries import TimeSeries
 from pprint import pprint
