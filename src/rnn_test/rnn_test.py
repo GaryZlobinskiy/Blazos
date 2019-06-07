@@ -1,5 +1,13 @@
 #https://www.marketwatch.com/game/stockpredictionrnn
 
+import cgi
+form = cgi.FieldStorage()
+
+# Use these in the prediction model
+ticker = form.getValue('tickerBox')
+time = form.getValues('timeChoice')
+
+
 
 import tensorflow as tf
 import numpy as np
