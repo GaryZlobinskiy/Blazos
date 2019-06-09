@@ -4,8 +4,8 @@ import cgi
 form = cgi.FieldStorage()
 
 # Use these in the prediction model
-ticker = form.getValue('tickerBox')
-time = form.getValues('timeChoice')
+# ticker = form.getValue('tickerBox')
+# time = form.getValues('timeChoice')
 
 
 
