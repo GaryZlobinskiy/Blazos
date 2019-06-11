@@ -60,7 +60,7 @@ for value in values:
         X.append(np.array(value[j - look_back:j]))
         y.append(np.array(value[j]))
 
-    i = i + 1
+    i += 1
 
 X = np.array(X)
 y = np.array(y)
@@ -85,7 +85,7 @@ model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
 print("Training...")
 # TODO: Decrease batch_size
-history = model.fit(X_train, y_train, epochs=2, batch_size=1, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, epochs=6, batch_size=1, verbose=1, validation_data=(X_test, y_test))
 
 print("Saving...")
 model.save_weights("rnn_model.h5")
