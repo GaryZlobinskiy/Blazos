@@ -6,8 +6,8 @@ num_features = 5
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(60, return_sequences=True, input_shape=(look_back, num_features)))
-model.add(tf.keras.layers.LSTM(25))
+model.add(tf.keras.layers.LSTM(105, return_sequences=True, input_shape=(look_back, num_features)))
+model.add(tf.keras.layers.LSTM(50))
 model.add(tf.keras.layers.Dense(num_features))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
