@@ -2,11 +2,11 @@
 
 import cgi
 form = cgi.FieldStorage()
-'''
+
 # Use these in the prediction model
-ticker = form.getValue('tickerBox')
-time = form.getValues('timeChoice')
-'''
+# ticker = form.getValue('tickerBox')
+# time = form.getValues('timeChoice')
+
 
 
 import tensorflow as tf
@@ -30,7 +30,7 @@ for file in filter(lambda name: name.endswith(".csv"), os.listdir("data")):
     data.drop("date", axis=1, inplace=True)
 
     values.append(data.values)
-    i = i + -1
+    i = i + 1-
 print("")
 
 print("\nScaling values...")
@@ -102,4 +102,3 @@ plt.show()
 print("Evaluating...")
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print("Test accuracy: ", test_acc)
-

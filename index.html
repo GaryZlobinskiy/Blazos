@@ -4,48 +4,47 @@
 <head>
   <meta charset="utf-8">
   <title>Blazos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 </head>
 
 <body>
-  <table cellspacing=20>
-    <tr>
-      <td><h1>Blazos</h1><p><em>The worlds best investment predictor!<strong>Never lose money every again!</strong> Github at: <strong><a href="https://github.com/GaryZlobinskiy/Blazos">GitHub Repository Link</a></strong>.</em></p>
-        <p>This investing software will use AI and at least 50 years worth of investing data from all of the stocks on the NYSE in order to automatically invest in the best stocks that will bring the most return per year. The goal is to achieve at least a 50% return per year on all invested money. This will be tested based on a simulation of the time being 2008 and the AI investing software investing in its stocks that it will choose based on the patterns it noticed with all the stocks and their corresponding data.</p></td>
-      <td>
-        <h3>Language Used</h3>
-        <p>The language used in this software will be Python for its compatibility ease with AI & Neural Networks.</p>
-      </td>
-    </tr>
-  </table>
-  <hr>
-  <table cellspacing=20>
-      <tr>
-      <td>
-        <h2>
-          Predictor Software
-        </h2>
-        <form name="tickerTime" action="/Blazos/src/rnn_test/rnn_test.py" method="get"> <!--write filename of model with graph-->
-          <p>
+  <div class="container my-5">
+    <div class="row">
+        <div class="col-md-8"><h1>Blazos</h1><p><em>The worlds best investment predictor! <strong>Never lose money every again!</strong> Github at: <strong><a href="https://github.com/GaryZlobinskiy/Blazos">GitHub Repository Link</a></strong>.</em></p>
+          <p>This investing software will use AI and at least 50 years worth of investing data from all of the stocks on the NYSE in order to automatically invest in the best stocks that will bring the most return per year. The goal is to achieve at least a 50% return per year on all invested money. This will be tested based on a simulation of the time being 2008 and the AI investing software investing in its stocks that it will choose based on the patterns it noticed with all the stocks and their corresponding data.</p></div>
+        <div class="col-md">
+          <h3>Language Used</h3>
+          <p>The language used in this software will be Python for its compatibility ease with AI & Neural Networks.</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+          <h2>
+            Predictor Software
+          </h2>
+          <form name="tickerTime" action="/Blazos/src/rnn_test/rnn_test.py" method="get"> <!--write filename of model with graph-->
+            <div class="form-group">
               <label>Write the Ticker (from the NYSE only) Symbol in All Caps</label><br>
-             <input type="text" name="tickerBox">
-          </p>
+              <input class="form-control" type="text" name="tickerBox">
+            </div>
             <p>
-             <label>Select Time for Prediction</label><br>
-             <select id="timeList" name="timeChoice">
-               <option value = "1">1 Day</option>
-               <option value = "7">1 Week</option>
-               <option value = "31">1 Month</option>
-               <option value = "365">1 Year</option>
-               <option value = "3652">10 Years</option>
-             </select>
-          </p>
-          <!--<input type = "text" name = "ticker"><br>-->
-          <input type="submit" value="Submit">
-        </form>
-      </td>
-      </tr>
-  </table>
-  <hr>
+              <label>Select Time for Prediction</label><br>
+              <select id="timeList" name="timeChoice">
+                <option value = "1">1 Day</option>
+                <option value = "7">1 Week</option>
+                <option value = "31">1 Month</option>
+                <option value = "365">1 Year</option>
+                <option value = "3652">10 Years</option>
+              </select>
+            </p>
+            <!--<input type = "text" name = "ticker"><br>-->
+            <input class="btn btn-primary" type="submit" value="Submit">
+          </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>
