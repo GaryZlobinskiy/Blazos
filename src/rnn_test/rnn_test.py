@@ -8,7 +8,7 @@ form = cgi.FieldStorage()
 # time = form.getValues('timeChoice')
 
 
-
+import math
 import tensorflow as tf
 import numpy as np
 import pandas as pd
@@ -78,14 +78,14 @@ y_test = np.reshape(y_test, (y_test.shape[0], 5))
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(60, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
-model.add(tf.keras.layers.LSTM(25))
+model.add(tf.keras.layers.LSTM(105, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
+model.add(tf.keras.layers.LSTM(50))
 model.add(tf.keras.layers.Dense(5))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
 print("Training...")
 # TODO: Decrease batch_size
-history = model.fit(X_train, y_train, epochs=6, batch_size=1, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, epochs=6, batch_size=4, verbose=1, validation_data=(X_test, y_test))
 
 print("Saving...")
 model.save_weights("rnn_model.h5")
