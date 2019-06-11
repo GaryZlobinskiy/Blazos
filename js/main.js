@@ -6,11 +6,13 @@ function ok(message) {
     console.info(`[%cok%c] ${message}`, "color: #0f0; font-weight: bold", "color: inherit; font-weight: initial");
 }
 
+const minVal = [15.2, 15.62, 14.87, 15.15, 3458100.0];
+const maxVal = [178.94, 180.38, 175.75, 179.94, 591052200.0];
+
 info("Loading model...");
 const modelPromise = tf.loadLayersModel("src/rnn_test/rnn_model_js/model.json").then(model => {
     window.model = model;
     ok("Loaded model.");
-    worker.postMessage({type: "model", model});
     return model;
 });
 
@@ -22,11 +24,46 @@ async function getModel() {
     }
 }
 
-info("Spawning web worker...");
-window.worker = new Worker("js/worker.js");
-window.worker.addEventListener("message", e => {
-    info(`Received message of type ${e.data.type}`)
-});
+function unscale(row) {
+    return row.map((val, idx) => {
+       return val * (maxVal[idx] - minVal[idx]) + minVal[idx];
+    });
+}
+
+async function predict(data, days, cb) {
+    info("Trimming and scaling data...");
+    let trimmedData = data.slice(-60).map(row => row.slice(1).map((val, idx) => {
+        return (val - minVal[idx]) / (maxVal[idx] - minVal[idx]);
+    }));
+
+    info("Running model...");
+    let i = 0;
+    function run(done) {
+        console.log(`Running model (${i + 1}/${days})...`);
+        const input = tf.tensor([trimmedData.slice(-60)]);
+        const output = model.predict(input).dataSync();
+
+        console.log(trimmedData[trimmedData.length - 1]);
+        console.log(output);
+
+        trimmedData.push(output);
+        cb(data.length + i, unscale(output));
+        i++;
+
+        if (i < days) {
+            setTimeout(() => run(done), 1);
+        } else {
+            done();
+        }
+    }
+
+    await new Promise(res => {
+       run(res);
+    });
+
+    ok("Done predicting.");
+    return trimmedData.slice(60).map(unscale);
+}
 
 Vue.component("sdf-stock", {
     props: ["symbol"],
@@ -58,17 +95,25 @@ Vue.component("sdf-stock", {
                 const date = new Date(cols[0] + " GMT");
 
                 return [date.getTime() / (24 * 60 * 60 * 1000), ...cols.slice(1).map(parseFloat)];
-            });
+            }).filter(row => row.length === 6);
 
             info(`Creating chart for ${this.$props.symbol}...`);
 
+            const graphLookBack = 365;
             const chartData = {
                 datasets: [{
-                    data: this.data.map((line, index) => {return {x: index, y: line[2]}}),
+                    data: this.data.slice(-graphLookBack).map((line, index) => {return {x: index + this.data.length - graphLookBack, y: line[2]}}),
                     xAxisId: "x-axis",
                     label: "Actual",
                     borderColor: "rgb(24, 128, 255)",
                     backgroundColor: "rgba(24, 128, 255, 0.2)",
+                    borderWidth: 2
+                }, {
+                    data: [],
+                    xAxisId: "x-axis",
+                    label: "Predicted",
+                    borderColor: "rgb(24, 170, 128)",
+                    backgroundColor: "rgba(24, 170, 128, 0.2)",
                     borderWidth: 2
                 }]
             };
@@ -92,31 +137,12 @@ Vue.component("sdf-stock", {
 
             ok(`Parsed data and created chart for ${this.$props.symbol}.`);
 
-            info(`Waiting for model - ${this.$props.symbol}...`);
-            await getModel();
-
-            info(`Calling service worker - ${this.$props.symbol}...`);
-            worker.postMessage({type: "predict", symbol: this.$props.symbol, data: this.data.slice(-60).map(row => row.slice(1)), days: 365});
-
-            const handler = e => {
-                if (e.data.type === "result" && e.data.symbol === this.$props.symbol) {
-                    ok(`Got result for ${this.$props.symbol}.`);
-                    window.worker.removeEventListener("message", handler);
-
-                    info(`Updating chart - ${this.$props.symbol}...`);
-                    this.chart.data.datasets.push({
-                        data: e.data.result.map((line, index) => {return {x: index + this.data.length, y: line[1]}}),
-                        xAxisId: "x-axis",
-                        label: "Predicted",
-                        borderColor: "rgb(24, 180, 128)",
-                        backgroundColor: "rgba(24, 180, 128, 0.2)",
-                        borderWidth: 2
-                    });
-                    this.chart.update();
-                    ok(`Updated chart - ${this.$props.symbol}.`);
-                }
-            };
-            window.worker.addEventListener("message", handler);
+            const days = 100;
+            info(`Predicting over ${days} days - ${this.$props.symbol}...`);
+            await predict(this.data, days, (index, data) => {
+                this.chart.data.datasets[1].data.push({x: index, y: data[1]});
+                this.chart.update();
+            });
         }).catch(e => {
             console.log(e);
             this.error = true;
