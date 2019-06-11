@@ -30,7 +30,7 @@ for file in filter(lambda name: name.endswith(".csv"), os.listdir("data")):
     data.drop("date", axis=1, inplace=True)
 
     values.append(data.values)
-    i = i + 1-
+    i = i + 1
 print("")
 
 print("\nScaling values...")

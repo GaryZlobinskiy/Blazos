@@ -4,7 +4,17 @@ from os import path
 import json
 import time
 
-keys = ["PQ5WZMLZQN3MBGHC", "QQS86XEKKBN7C828", "HPZ6OOWU6AD3RKW4", "C2K3U5N3MG9NB9U6", "X8L8C4EJD5B41NSD", "SHCBRC78908O3AL3"]
+#Added some keys, failed to fetch data for more than half the stocks
+keys = ["PQ5WZMLZQN3MBGHC",
+        "QQS86XEKKBN7C828",
+        "HPZ6OOWU6AD3RKW4",
+        "C2K3U5N3MG9NB9U6",
+        "X8L8C4EJD5B41NSD",
+        "SHCBRC78908O3AL3",
+        "6O9W6TYAZ6K74APO",
+        "RAG9197QHKE7K585",
+        "ZP4UQ6QF2N4RNS0H",
+        "8BQJLCXO6LJRXVNP",]
 wait_time = 3
 
 f = open(path.normpath(path.join(path.dirname(__file__), "../symbols.json")))

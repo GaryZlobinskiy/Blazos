@@ -10,6 +10,7 @@ form = cgi.FieldStorage()
 ticker = form.getValue('tickerBox')
 time = form.getValues('timeChoice')
 '''
+from pandas import Series
 import tensorflow as tf
 import numpy as np
 import pandas as pd
@@ -98,9 +99,10 @@ model.load_weights("rnn_model.h5")
 
 result = model.predict(X_test)
 
-from pandas import Series
 series = Series.from_csv('rnn_test_data.csv', header = 0)
 print(series.head())
-series.add(result)
 series.plot()
+plt.show()
+
+plt.plot(X_test, result, color='red', linewidth=3)
 plt.show()
