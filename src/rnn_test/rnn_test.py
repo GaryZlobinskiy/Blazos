@@ -51,7 +51,7 @@ i = 0
 X = []
 y = []
 
-look_back = 60
+look_back = 120
 
 for value in values:
     print("Processing (%d/%d)" % (i + 1, len(values)), end="\r")
@@ -70,7 +70,7 @@ print(X.shape)
 print(y.shape)
 
 print("\nSplitting data...")
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, train_size=0.8)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, train_size=0.55)
 X_train = np.reshape(X_train, (X_train.shape[0], look_back, X_train.shape[2]))
 X_test = np.reshape(X_test, (X_test.shape[0], look_back, X_test.shape[2]))
 y_train = np.reshape(y_train, (y_train.shape[0], 5))
@@ -78,14 +78,14 @@ y_test = np.reshape(y_test, (y_test.shape[0], 5))
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(105, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
-model.add(tf.keras.layers.LSTM(50))
+model.add(tf.keras.layers.LSTM(120, return_sequences=True, input_shape=(look_back, X_train.shape[2])))
+model.add(tf.keras.layers.LSTM(60))
 model.add(tf.keras.layers.Dense(5))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
 print("Training...")
 # TODO: Decrease batch_size
-history = model.fit(X_train, y_train, epochs=6, batch_size=4, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, epochs=4, batch_size=4, verbose=1, validation_data=(X_test, y_test))
 
 print("Saving...")
 model.save_weights("rnn_model.h5")
