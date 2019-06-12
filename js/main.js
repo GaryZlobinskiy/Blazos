@@ -32,7 +32,7 @@ function unscale(row) {
 
 async function predict(data, days, cb) {
     info("Trimming and scaling data...");
-    let trimmedData = data.slice(-120).map(row => row.slice(1).map((val, idx) => {
+    let trimmedData = data.slice(-240).map(row => row.slice(1).map((val, idx) => {
         return (val - minVal[idx]) / (maxVal[idx] - minVal[idx]);
     }));
 
@@ -40,7 +40,7 @@ async function predict(data, days, cb) {
     let i = 0;
     function run(done) {
         console.log(`Running model (${i + 1}/${days})...`);
-        const input = tf.tensor([trimmedData.slice(-120).flat()]);
+        const input = tf.tensor([trimmedData.slice(-240).flat()]);
         const output = model.predict(input).dataSync();
 
         trimmedData.push(Array.from(output));
@@ -59,7 +59,7 @@ async function predict(data, days, cb) {
     });
 
     ok("Done predicting.");
-    return trimmedData.slice(120).map(unscale);
+    return trimmedData.slice(240).map(unscale);
 }
 
 Vue.component("sdf-stock", {

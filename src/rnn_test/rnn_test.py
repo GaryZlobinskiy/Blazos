@@ -51,7 +51,7 @@ i = 0
 X = []
 y = []
 
-look_back = 120
+look_back = 240
 
 for value in values:
     print("Processing (%d/%d)" % (i + 1, len(values)), end="\r")
@@ -78,9 +78,10 @@ y_test = np.reshape(y_test, (y_test.shape[0], 5))
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Dense(120, input_dim=600))
+model.add(tf.keras.layers.Dense(150, input_dim=5*look_back))
 model.add(tf.keras.layers.Dense(60))
 model.add(tf.keras.layers.Dense(60))
+model.add(tf.keras.layers.Dense(30))
 model.add(tf.keras.layers.Dense(5))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
