@@ -21,19 +21,18 @@
       </div>
       <hr>
       <div>
-        <h2>
-          Predictor Software
-        </h2>
-        <form name="tickerTime" @submit="addTicker"> <!--write filename of model with graph-->
+        <form name="tickerTime" @submit="addTicker" ref="addTickerForm"> <!--write filename of model with graph-->
           <div class="form-group">
-            <label>Write the Ticker (from the NYSE only) Symbol in All Caps</label><br>
-            <input class="form-control" type="text" name="tickerBox" v-model="ticker">
+            <label>Ticker:</label><br>
+            <input class="form-control" type="text" name="tickerBox" v-model="ticker" placeholder="AMZN">
           </div>
           <!--<input type = "text" name = "ticker"><br>-->
-          <input class="btn btn-primary" type="submit" value="Submit">
+          <input class="btn btn-primary" type="submit" value="Add Ticker">
         </form>
       </div>
-      <sdf-stock v-for="symbol of tickers" :symbol="symbol"></sdf-stock>
+      <sdf-stock v-for="symbol in tickers" :symbol="symbol" :key="symbol" @remove="tickers.splice(tickers.indexOf(symbol), 1)"></sdf-stock>
+      <hr />
+      <p>Options: <a href="#" @click="getAPIKey()">Set Alpha Vantage API Key</a></p>
     </div>
   </div>
 
