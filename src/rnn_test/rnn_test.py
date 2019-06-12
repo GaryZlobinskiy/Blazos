@@ -78,16 +78,15 @@ y_test = np.reshape(y_test, (y_test.shape[0], 5))
 
 print("Creating model...")
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Dense(150, input_dim=5*look_back))
+model.add(tf.keras.layers.Dense(120, input_dim=5*look_back))
 model.add(tf.keras.layers.Dense(60))
 model.add(tf.keras.layers.Dense(60))
-model.add(tf.keras.layers.Dense(30))
 model.add(tf.keras.layers.Dense(5))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
 print("Training...")
 # TODO: Decrease batch_size
-history = model.fit(X_train, y_train, epochs=4, batch_size=4, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, epochs=6, batch_size=4, verbose=1, validation_data=(X_test, y_test))
 
 print("Saving...")
 model.save_weights("rnn_model.h5")

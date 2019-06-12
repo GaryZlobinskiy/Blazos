@@ -134,7 +134,7 @@ Vue.component("sdf-stock", {
 
             ok(`Parsed data and created chart for ${this.$props.symbol}.`);
 
-            const days = 100;
+            const days = 365;
             info(`Predicting over ${days} days - ${this.$props.symbol}...`);
             await predict(this.data, days, (index, data) => {
                 this.chart.data.datasets[1].data.push({x: index, y: data[1]});
