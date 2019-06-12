@@ -32,7 +32,7 @@ function unscale(row) {
 
 async function predict(data, days, cb) {
     info("Trimming and scaling data...");
-    let trimmedData = data.slice(-60).map(row => row.slice(1).map((val, idx) => {
+    let trimmedData = data.slice(-120).map(row => row.slice(1).map((val, idx) => {
         return (val - minVal[idx]) / (maxVal[idx] - minVal[idx]);
     }));
 
@@ -40,13 +40,10 @@ async function predict(data, days, cb) {
     let i = 0;
     function run(done) {
         console.log(`Running model (${i + 1}/${days})...`);
-        const input = tf.tensor([trimmedData.slice(-60)]);
+        const input = tf.tensor([trimmedData.slice(-120).flat()]);
         const output = model.predict(input).dataSync();
 
-        console.log(trimmedData[trimmedData.length - 1]);
-        console.log(output);
-
-        trimmedData.push(output);
+        trimmedData.push(Array.from(output));
         cb(data.length + i, unscale(output));
         i++;
 
@@ -62,7 +59,7 @@ async function predict(data, days, cb) {
     });
 
     ok("Done predicting.");
-    return trimmedData.slice(60).map(unscale);
+    return trimmedData.slice(120).map(unscale);
 }
 
 Vue.component("sdf-stock", {
@@ -99,7 +96,7 @@ Vue.component("sdf-stock", {
 
             info(`Creating chart for ${this.$props.symbol}...`);
 
-            const graphLookBack = 365;
+            const graphLookBack = 1000;
             const chartData = {
                 datasets: [{
                     data: this.data.slice(-graphLookBack).map((line, index) => {return {x: index + this.data.length - graphLookBack, y: line[2]}}),
