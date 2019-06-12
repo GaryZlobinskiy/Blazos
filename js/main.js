@@ -69,7 +69,8 @@ Vue.component("sdf-stock", {
             isLoaded: false,
             error: false,
             chart: null,
-            data: null
+            data: null,
+            featureIndex: 1
         };
     },
     mounted() {
@@ -96,10 +97,10 @@ Vue.component("sdf-stock", {
 
             info(`Creating chart for ${this.$props.symbol}...`);
 
-            const graphLookBack = 1000;
+            const graphLookBack = 3128;
             const chartData = {
                 datasets: [{
-                    data: this.data.slice(-graphLookBack).map((line, index) => {return {x: index + this.data.length - graphLookBack, y: line[2]}}),
+                    data: this.data.slice(-graphLookBack).map((line, index) => {return {x: index + this.data.length - graphLookBack, y: line[this.featureIndex + 1]}}),
                     xAxisId: "x-axis",
                     label: "Actual",
                     borderColor: "rgb(24, 128, 255)",
@@ -137,7 +138,7 @@ Vue.component("sdf-stock", {
             const days = 365;
             info(`Predicting over ${days} days - ${this.$props.symbol}...`);
             await predict(this.data, days, (index, data) => {
-                this.chart.data.datasets[1].data.push({x: index, y: data[1]});
+                this.chart.data.datasets[1].data.push({x: index, y: data[this.featureIndex]});
                 this.chart.update();
             });
         }).catch(e => {
