@@ -225,6 +225,7 @@ Vue.component("sdf-stock", {
                 <p><a href="#" @click.prevent="startPredicting(90)">Predict 3 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(180)">Predict 6 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(365)">Predict 1 Year</a></p>
+                <p><a href="#" @click.prevent="startPredicting(Infinity)">Predict Forever</a></p>
               </div>
             </div>
             <p v-else class="text-secondary">Loading data...</p>
