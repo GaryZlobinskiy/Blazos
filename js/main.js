@@ -113,8 +113,8 @@ Vue.component("sdf-stock", {
                         data: [],
                         xAxisId: "x-axis",
                         label: "Predicted",
-                        borderColor: "rgb(24, 170, 128)",
-                        backgroundColor: "rgba(24, 170, 128, 0.2)",
+                        borderColor: "rgb(128, 128, 128)",
+                        backgroundColor: "rgba(128, 128, 128, 0.2)",
                         borderWidth: 2
                     }]
                 };
@@ -184,6 +184,19 @@ Vue.component("sdf-stock", {
                 predict(this.data.slice(0, -(offset + 1)).concat(this.predicted), data => {
                     this.predicted.push(Array.from(data));
                     this.chart.data.datasets[1].data.push({x: this.data.length - offset + this.predicted.length - 1, y: data[this.featureIndex]});
+
+                    const comparisonResult = this.data[this.data.length - 1][this.featureIndex] - data[this.featureIndex];
+                    if (comparisonResult === 0) {
+                        this.chart.data.datasets[1].borderColor = "rgb(128, 128, 128)";
+                        this.chart.data.datasets[1].backgroundColor = "rgba(128, 128, 128, 0.2)";
+                    } else if (comparisonResult > 0) {
+                        this.chart.data.datasets[1].borderColor = "rgb(186, 42, 10)";
+                        this.chart.data.datasets[1].backgroundColor = "rgba(186, 42, 10, 0.2)";
+                    } else {
+                        this.chart.data.datasets[1].borderColor = "rgb(10, 186, 128)";
+                        this.chart.data.datasets[1].backgroundColor = "rgba(10, 186, 128, 0.2)";
+                    }
+
                     this.chart.update({duration: 0});
 
                     i++;
