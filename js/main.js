@@ -15,7 +15,7 @@ info("Loading model...");
 const modelPromise = tf.loadLayersModel("src/rnn_test/rnn_model_js/model.json").then(model => {
     window.model = model;
     ok("Loaded model.");
-    return model;
+    return model;sw3
 });
 
 async function getModel() {
@@ -226,6 +226,7 @@ Vue.component("sdf-stock", {
                 <p><a href="#" @click.prevent="startPredicting(180)">Predict 6 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(365)">Predict 1 Year</a></p>
                 <p><a href="#" @click.prevent="startPredicting(Infinity)">Predict Forever</a></p>
+                <p><a href="#" @click.prevent="startPredicting(-4002)">Simulate 2008 Prediction</a></p>
               </div>
             </div>
             <p v-else class="text-secondary">Loading data...</p>
