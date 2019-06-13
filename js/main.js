@@ -187,6 +187,7 @@ Vue.component("sdf-stock", {
                 if (offset !== this.lastOffset) {
                     this.predicted = [];
                 }
+                this.lastOffset = offset;
                 this.isPredicting = true;
                 info(`Predicting over ${days} days - ${this.$props.symbol}...`);
                 let i = 0;
