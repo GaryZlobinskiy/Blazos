@@ -1,2 +1,20 @@
-.chart {
+body {
+    background-color: black;
+    color: white;
+}
+
+.form-control {
+    background-color: #222;
+    border: none;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: #333;
+    border: none;
+    color: white;
+}
+
+hr {
+    border-color: #333;
 }
