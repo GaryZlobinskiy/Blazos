@@ -62,7 +62,8 @@ Vue.component("sdf-stock", {
             data: null,
             predicted: [],
             featureIndex: 1,
-            isPredicting: false
+            isPredicting: false,
+            lastOffset: null
         };
     },
     mounted() {
@@ -183,10 +184,12 @@ Vue.component("sdf-stock", {
         },
         startPredicting(days, offset = 0) {
             if (!this.isPredicting) {
+                if (offset !== this.lastOffset) {
+                    this.predicted = [];
+                }
                 this.isPredicting = true;
                 info(`Predicting over ${days} days - ${this.$props.symbol}...`);
                 let i = 0;
-                console.log(this.data.slice(0, -(offset + 1)).length);
                 predict(this.data.slice(0, -(offset + 1)).concat(this.predicted), data => {
                     this.predicted.push(Array.from(data));
                     this.chart.data.datasets[1].data.push({x: this.data.length - offset + this.predicted.length - 1, y: data[this.featureIndex]});
