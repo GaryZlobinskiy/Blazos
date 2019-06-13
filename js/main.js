@@ -95,7 +95,7 @@ Vue.component("sdf-stock", {
 
                 info(`Creating chart for ${this.$props.symbol}...`);
 
-                const graphLookBack = 720;
+                const graphLookBack = 4000;
                 const chartData = {
                     datasets: [{
                         data: this.data.slice(-graphLookBack).map((line, index) => {
@@ -181,6 +181,7 @@ Vue.component("sdf-stock", {
                 this.isPredicting = true;
                 info(`Predicting over ${days} days - ${this.$props.symbol}...`);
                 let i = 0;
+                console.log(this.data.slice(0, -(offset + 1)).length);
                 predict(this.data.slice(0, -(offset + 1)).concat(this.predicted), data => {
                     this.predicted.push(Array.from(data));
                     this.chart.data.datasets[1].data.push({x: this.data.length - offset + this.predicted.length - 1, y: data[this.featureIndex]});
@@ -226,8 +227,7 @@ Vue.component("sdf-stock", {
                 <p><a href="#" @click.prevent="startPredicting(180)">Predict 6 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(365)">Predict 1 Year</a></p>
                 <p><a href="#" @click.prevent="startPredicting(Infinity)">Predict Forever</a></p>
-                <!--   Here is what I tried for the button:  <button onclick="startPredicting(-4002)">Simulate 2008 Housing Crisis Prediction</button>   -->
-                <p><a href="#" @click.prevent="startPredicting(-4002)">Simulate 2008 Prediction</a></p>
+                <p><a href="#" @click.prevent="startPredicting(4002, -4002)">Simulate 2008 Prediction</a></p>
               </div>
             </div>
             <p v-else class="text-secondary">Loading data...</p>
