@@ -95,15 +95,9 @@ Vue.component("sdf-stock", {
 
                 info(`Creating chart for ${this.$props.symbol}...`);
 
-                const graphLookBack = 4000;
                 const chartData = {
                     datasets: [{
-                        data: this.data.slice(-graphLookBack).map((line, index) => {
-                            return {
-                                x: index + this.data.length - graphLookBack,
-                                y: line[this.featureIndex + 1]
-                            }
-                        }),
+                        data: [],
                         xAxisId: "x-axis",
                         label: "Actual",
                         borderColor: "rgb(24, 128, 255)",
@@ -170,11 +164,22 @@ Vue.component("sdf-stock", {
                     }
                 });
 
+                this.loadGraphData(730);
+
                 ok(`Parsed data and created chart for ${this.$props.symbol}.`);
             } catch (e) {
                 console.error(e);
                 this.error = e;
             }
+        },
+        loadGraphData(graphLookBack) {
+            this.chart.data.datasets[0].data = this.data.slice(-graphLookBack).map((line, index) => {
+                return {
+                    x: index + this.data.length - graphLookBack,
+                    y: line[this.featureIndex + 1]
+                }
+            });
+            this.chart.update();
         },
         startPredicting(days, offset = 0) {
             if (!this.isPredicting) {
@@ -227,7 +232,7 @@ Vue.component("sdf-stock", {
                 <p><a href="#" @click.prevent="startPredicting(180)">Predict 6 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(365)">Predict 1 Year</a></p>
                 <p><a href="#" @click.prevent="startPredicting(Infinity)">Predict Forever</a></p>
-                <p><a href="#" @click.prevent="startPredicting(4002, -4002)">Simulate 2008 Prediction</a></p>
+                <p><a href="#" @click.prevent="loadGraphData(4002) || startPredicting(4002, 4002)">Simulate 2008 Prediction</a></p>
               </div>
             </div>
             <p v-else class="text-secondary">Loading data...</p>
