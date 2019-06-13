@@ -191,7 +191,7 @@ Vue.component("sdf-stock", {
                     this.predicted.push(Array.from(data));
                     this.chart.data.datasets[1].data.push({x: this.data.length - offset + this.predicted.length - 1, y: data[this.featureIndex]});
 
-                    const comparisonResult = this.data[this.data.length - 1][this.featureIndex] - data[this.featureIndex];
+                    const comparisonResult = this.data[this.data.length - offset - 1][this.featureIndex] - data[this.featureIndex];
                     if (comparisonResult === 0) {
                         this.chart.data.datasets[1].borderColor = "rgb(128, 128, 128)";
                         this.chart.data.datasets[1].backgroundColor = "rgba(128, 128, 128, 0.2)";
