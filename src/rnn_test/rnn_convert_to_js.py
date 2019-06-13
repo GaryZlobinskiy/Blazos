@@ -8,7 +8,7 @@ print("Creating model...")
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Dense(120, input_dim=num_features*look_back))
 model.add(tf.keras.layers.Dense(60))
-model.add(tf.keras.layers.Dense(60))
+model.add(tf.keras.layers.Dense(30))
 model.add(tf.keras.layers.Dense(num_features))
 model.compile(loss="mean_squared_error", optimizer="adam", metrics=["mae"])
 
