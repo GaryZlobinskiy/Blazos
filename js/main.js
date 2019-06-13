@@ -226,6 +226,7 @@ Vue.component("sdf-stock", {
                 <p><a href="#" @click.prevent="startPredicting(180)">Predict 6 Months</a></p>
                 <p><a href="#" @click.prevent="startPredicting(365)">Predict 1 Year</a></p>
                 <p><a href="#" @click.prevent="startPredicting(Infinity)">Predict Forever</a></p>
+                <!--   Here is what I tried for the button:  <button onclick="startPredicting(-4002)">Simulate 2008 Housing Crisis Prediction</button>   -->
                 <p><a href="#" @click.prevent="startPredicting(-4002)">Simulate 2008 Prediction</a></p>
               </div>
             </div>
