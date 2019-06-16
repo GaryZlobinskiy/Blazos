@@ -15,7 +15,7 @@ info("Loading model...");
 const modelPromise = tf.loadLayersModel("src/rnn_test/rnn_model_js/model.json").then(model => {
     window.model = model;
     ok("Loaded model.");
-    return model;sw3
+    return model;
 });
 
 async function getModel() {
