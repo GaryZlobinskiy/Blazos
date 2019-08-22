@@ -28,6 +28,7 @@
           </div>
           <!--<input type = "text" name = "ticker"><br>-->
           <input class="btn btn-primary" type="submit" value="Add Ticker">
+          <p class="mt-3"><small class="text-white-50">By using this software, you agree that under no circumstances shall the authors be liable for any claims, damages, or other liabilities arising from use of this software and its predictions. Absolutely no warranty of any kind is given; predictions are provided "as is."</small></p>
         </form>
       </div>
       <sdf-stock v-for="symbol in tickers" :symbol="symbol" :key="symbol" @remove="tickers.splice(tickers.indexOf(symbol), 1)"></sdf-stock>
